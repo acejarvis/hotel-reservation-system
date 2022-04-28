@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
@@ -19,6 +20,9 @@ public class RoomController {
         throw new IllegalStateException("Room Controller class");
     }
 
+    // explain
+    // Input: room number range, room type
+    // Output: list of rooms
     public static List<Room> getAvailableRoomsByDateAndType(Date date, RoomType roomType) {
         RoomDao roomDao = new RoomDao();
         RoomReservedDao roomReservedDao = new RoomReservedDao();
@@ -26,7 +30,7 @@ public class RoomController {
         List<Room> availableRooms = roomDao.getRoomsByType(roomType);
 
         // Remove rooms that are reserved
-        ListIterator<Room> roomIterator = availableRooms.listIterator();
+        Iterator<Room> roomIterator = availableRooms.iterator();
         while (roomIterator.hasNext()) {
             Room room = roomIterator.next();
             List<RoomReserved> roomReservedList = roomReservedDao.getRoomReservedsByRoomId(room.getRoomId());
